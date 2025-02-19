@@ -1,7 +1,9 @@
+"use client";
 import Sidebar from "@/components/Sidebar";
 import TopBar from "@/components/TopBar";
-import { Box } from "@mui/material";
-import { ReactNode } from "react";
+import { Box, Button, Drawer } from "@mui/material";
+import { ReactNode, useState } from "react";
+import { IoMdMenu } from "react-icons/io";
 
 type PropsChildren = {
   children?: ReactNode;
@@ -13,17 +15,20 @@ const DashboardLayout = ({ children }: PropsChildren) => {
       {/* left sidebar */}
       <Box
         sx={{
-          width: "18%",
-          p: "24px 28px",
+          width: { xs: "10%", sm: "15%", md: "18%" },
+          p: { md: "24px 10px", xl: "24px 28px" },
           borderRight: "1px solid #919EAB1F",
         }}
       >
         <Sidebar />
       </Box>
+
       {/* right */}
-      <Box sx={{ width: "82%" }}>
+      <Box sx={{ width: { xs: "90%", sm: "85%", md: "82%" } }}>
         <TopBar />
-        <Box sx={{ p: "24px 40px" }}>{children}</Box>
+        <Box sx={{ py: "24px", px: { xs: "20px", lg: "40px" } }}>
+          {children}
+        </Box>
       </Box>
     </Box>
   );

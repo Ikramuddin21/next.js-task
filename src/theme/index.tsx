@@ -43,6 +43,10 @@ export default function ThemeProvider({ children }: Props) {
           fontSize: "24px",
           lineHeight: "36px",
         },
+        h3: {
+          fontSize: "18px",
+          lineHeight: "28px",
+        },
         subtitle1: {
           fontSize: "11px",
           color: "#919EAB",
