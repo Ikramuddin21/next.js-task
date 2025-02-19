@@ -1,5 +1,6 @@
-import { Avatar, Box } from "@mui/material";
+import { Box } from "@mui/material";
 import Image from "next/image";
+import avatar from "@/assets/avatar_top.png";
 
 const TopBar = () => {
   return (
@@ -14,6 +15,7 @@ const TopBar = () => {
         boxShadow: " rgba(33, 35, 38, 0.1) 0px 10px 10px -10px",
       }}
     >
+      {/* avatar */}
       <Box
         sx={{
           border: "1px solid #5BE49B",
@@ -21,13 +23,7 @@ const TopBar = () => {
           p: "4px",
         }}
       >
-        <Avatar
-          src={"@/assets/avatar_top.png"}
-          alt="Avatar Preview"
-          sx={{ width: "36px", height: "36px" }}
-          //   height={36}
-          //   width={36}
-        />
+        <Image src={avatar} alt="Avatar Preview" height={36} width={36} />
       </Box>
     </Box>
   );
