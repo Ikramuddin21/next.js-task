@@ -6,7 +6,7 @@ const DashboardLineChart = () => {
   const [state, setState] = useState<any>({
     series: [
       {
-        name: "Desktop",
+        name: "Offer",
         data: [25, 55, 63, 60, 66, 88, 114],
         color: "#1C252E",
       },
@@ -61,7 +61,7 @@ const DashboardLineChart = () => {
           options={state.options}
           series={state.series}
           type="line"
-          height={350}
+          height={374}
           width={"100%"}
         />
       </div>

@@ -7,19 +7,9 @@ import Image from "next/image";
 import DashboardBarChart from "@/components/DashboardBarChart";
 import DashboardLineChart from "@/components/DashboardLineChart";
 import { useState } from "react";
+import DashboardTableContainer from "@/components/DashboardTableContainer";
 
 const page = () => {
-  const [value, setValue] = useState("1");
-  function a11yProps(index: number) {
-    return {
-      id: `simple-tab-${index}`,
-      "aria-controls": `simple-tabpanel-${index}`,
-    };
-  }
-
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
-  };
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -190,30 +180,7 @@ const page = () => {
           Offer List
         </Typography>
 
-        <Box sx={{}}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              indicatorColor="secondary"
-              aria-label="basic tabs example"
-              sx={{
-                pl: "24px",
-                "& .MuiButtonBase-root": {
-                  color: "secondary",
-                  textTransform: "capitalize",
-                },
-
-                // "& .Mui-selected": {
-                //   color: "#1C252E !important",
-                // },
-              }}
-            >
-              <Tab label="All" value="1" />
-              <Tab label="Accepted" value="2" />
-            </Tabs>
-          </Box>
-        </Box>
+        <DashboardTableContainer />
       </Box>
     </Box>
   );

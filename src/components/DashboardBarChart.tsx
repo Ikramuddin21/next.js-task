@@ -17,6 +17,17 @@ const DashboardBarChart = () => {
       },
     ],
     options: {
+      legend: {
+        position: "top",
+        horizontalAlign: "right",
+        // offsetX: -15,
+        markers: {
+          size: 5.5,
+          shape: "circle",
+          offsetX: -1,
+        },
+        fontWeight: "bold",
+      },
       chart: {
         type: "bar",
         height: 350,
@@ -57,7 +68,7 @@ const DashboardBarChart = () => {
     <Box sx={{ width: "auto" }}>
       <Typography
         variant="h3"
-        sx={{ fontWeight: "600", color: "primary.main" }}
+        sx={{ mb: "24px", fontWeight: "600", color: "primary.main" }}
       >
         Website visits
       </Typography>
