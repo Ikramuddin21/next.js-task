@@ -74,16 +74,20 @@ const DashboardTable = () => {
       align: "left",
     },
   ];
-
-  // function createData(
-  //   name: string,
-  //   code: string,
-  //   population: number,
-  //   size: number
-  // ): Data {
-  //   const density = population / size;
-  //   return { name, code, population, size, density };
-  // }
+  interface StatusStyleType {
+    backgroundColor: string;
+    color: string;
+  }
+  // render status style
+  const renderStatusStyle = (status: string | any): StatusStyleType => {
+    if (status === "accepted") {
+      return { backgroundColor: "#22C55E29", color: "#118D57" };
+    } else if (status === "rejected") {
+      return { backgroundColor: "#FF563029", color: "#B71D18" };
+    } else {
+      return { backgroundColor: "#FFAB0029", color: "#B76E00" };
+    }
+  };
 
   const rows: Data[] = [
     {
@@ -96,29 +100,24 @@ const DashboardTable = () => {
       status: "accepted",
     },
     {
-      name: "John Khan",
-      email: "john12@gmail.com",
+      name: "Mr. Lorem",
+      email: "lorem12@gmail.com",
       phone_number: "0152102120",
       company: "Software Ltd",
       job_title: "Frontend Developer",
       type: "Monthly",
-      status: "accepted",
+      status: "rejected",
+    },
+    {
+      name: "Jestin",
+      email: "jestin12@gmail.com",
+      phone_number: "0152102120",
+      company: "Software Ltd",
+      job_title: "Frontend Developer",
+      type: "Monthly",
+      status: "pending",
     },
   ];
-  // createData("China", "CN", 1403500365, 9596961),
-  // createData("Italy", "IT", 60483973, 301340),
-  // createData("United States", "US", 327167434, 9833520),
-  // createData("Canada", "CA", 37602103, 9984670),
-  // createData("Australia", "AU", 25475400, 7692024),
-  // createData("Germany", "DE", 83019200, 357578),
-  // createData("Ireland", "IE", 4857000, 70273),
-  // createData("Mexico", "MX", 126577691, 1972550),
-  // createData("Japan", "JP", 126317000, 377973),
-  // createData("France", "FR", 67022000, 640679),
-  // createData("United Kingdom", "GB", 67545757, 242495),
-  // createData("Russia", "RU", 146793744, 17098246),
-  // createData("Nigeria", "NG", 200962417, 923768),
-  // createData("Brazil", "BR", 210147125, 8515767),
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -200,7 +199,12 @@ const DashboardTable = () => {
                             </div>
                           ) : column.id === "status" ? (
                             <div>
-                              <Button>Accepted</Button>
+                              <Button
+                                size="small"
+                                sx={renderStatusStyle(value)}
+                              >
+                                {value}
+                              </Button>
                             </div>
                           ) : (
                             value

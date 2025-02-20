@@ -7,7 +7,7 @@ const DashboardBarChart = () => {
     series: [
       {
         name: "Desktop",
-        data: [44, 55, 63, 60, 66, 38, 100],
+        data: [44, 55, 96, 60, 66, 113, 100],
         color: "#007867",
       },
       {
@@ -36,7 +36,7 @@ const DashboardBarChart = () => {
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: "45%",
+          columnWidth: "70%",
           endingShape: "rounded",
           borderRadius: 3,
         },
