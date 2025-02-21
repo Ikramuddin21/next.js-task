@@ -115,11 +115,17 @@ const DashboardContainer = () => {
 
       {/* chart section */}
       <Box
-        sx={{ mt: "24px", display: "flex", alignItems: "center", gap: "24px" }}
+        sx={{
+          mt: "24px",
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: "center",
+          gap: "24px",
+        }}
       >
         <Box
           sx={{
-            width: "50%",
+            width: { xs: "100%", md: "50%" },
             p: "24px",
             borderRadius: "16px",
             boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
@@ -129,7 +135,7 @@ const DashboardContainer = () => {
         </Box>
         <Box
           sx={{
-            width: "50%",
+            width: { xs: "100%", md: "50%" },
             p: "24px",
             borderRadius: "16px",
             boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",

@@ -24,7 +24,7 @@ const DashboardTableContainer = () => {
   return (
     <>
       {/* tabs */}
-      <Box sx={{}}>
+      <Box>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={value}
@@ -46,7 +46,15 @@ const DashboardTableContainer = () => {
       </Box>
 
       {/* search/filter table */}
-      <Box sx={{ my: "20px", px: "24px", display: "flex", gap: "16px" }}>
+      <Box
+        sx={{
+          my: "20px",
+          px: "24px",
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          gap: "16px",
+        }}
+      >
         <TextField
           placeholder="Search..."
           slotProps={{
@@ -59,7 +67,7 @@ const DashboardTableContainer = () => {
             },
           }}
           sx={{
-            width: "50%",
+            width: { xs: "100%", md: "50%" },
             "& .MuiInputBase-input": {
               fontSize: "15px",
               color: "primary.main",
@@ -72,7 +80,7 @@ const DashboardTableContainer = () => {
 
         <FormControl
           sx={{
-            width: "20%",
+            width: { xs: "100%", md: "20%" },
           }}
         >
           <InputLabel id="demo-simple-select-label">Type</InputLabel>

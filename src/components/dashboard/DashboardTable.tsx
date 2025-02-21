@@ -221,6 +221,8 @@ const DashboardTable = () => {
       </TableContainer>
       <TablePagination
         sx={{
+          "& .MuiTablePagination-select": { mx: "4px" },
+          "& .MuiTablePagination-actions": { mx: "4px" },
           "& .MuiTablePagination-toolbar": {
             height: "20px !important",
           },
