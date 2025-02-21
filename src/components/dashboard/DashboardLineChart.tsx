@@ -1,3 +1,4 @@
+"use client";
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 import ReactApexChart from "react-apexcharts";

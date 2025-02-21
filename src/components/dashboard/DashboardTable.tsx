@@ -1,3 +1,4 @@
+"use client";
 import { Box, Button } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -152,13 +153,13 @@ const DashboardTable = () => {
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((row, index) => {
                 return (
                   <TableRow
                     hover
                     role="checkbox"
                     tabIndex={-1}
-                    key={row.phone_number}
+                    key={`${row.phone_number}_${index}`}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
@@ -219,6 +220,11 @@ const DashboardTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
+        sx={{
+          "& .MuiTablePagination-toolbar": {
+            height: "20px !important",
+          },
+        }}
         rowsPerPageOptions={[5, 10, 20]}
         component="div"
         count={rows.length}

@@ -23,6 +23,7 @@ export function cssBaseline(theme: Theme) {
           height: "100%",
           fontSize: "14px",
           color: "#1C252E",
+          backgroundColor: "#ffffff",
         },
         "#root, #__next": {
           width: "100%",

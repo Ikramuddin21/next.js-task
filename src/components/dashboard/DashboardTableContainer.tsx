@@ -1,11 +1,10 @@
+"use client";
 import {
   Box,
   FormControl,
-  IconButton,
   InputAdornment,
   InputLabel,
   MenuItem,
-  OutlinedInput,
   Select,
   Tab,
   Tabs,
@@ -14,6 +13,7 @@ import {
 import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import DashboardTable from "./DashboardTable";
+import { IoIosArrowDown } from "react-icons/io";
 
 const DashboardTableContainer = () => {
   const [value, setValue] = useState("1");
@@ -80,6 +80,9 @@ const DashboardTableContainer = () => {
             id="demo-simple-select"
             label="Type"
             defaultValue="all"
+            IconComponent={(props) => (
+              <IoIosArrowDown {...props} color="#1C252E" />
+            )}
             //   onChange={handleChange}
             sx={{
               "& .MuiInputBase-input": {

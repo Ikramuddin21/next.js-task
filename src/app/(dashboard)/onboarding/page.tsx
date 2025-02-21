@@ -1,10 +1,11 @@
-import OnboardingView from "@/sections/onboarding/views/onboarding-view";
+import OnboardingForm from "@/components/onboarding/OnboardingForm";
 
 export const metadata = {
-    title: 'Onboarding',
+  title: "Onboarding",
 };
 
+const page = () => {
+  return <OnboardingForm />;
+};
 
-export default function Page() {
-    return <OnboardingView/>;
-}
+export default page;
