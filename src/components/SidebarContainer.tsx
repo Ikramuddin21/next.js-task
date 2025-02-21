@@ -1,14 +1,9 @@
-import { Box, Button, Drawer, Typography } from "@mui/material";
-import Link from "next/link";
-import dashboardIcon from "@/assets/dashboard_icon.png";
-import onboardingIcon from "@/assets/onboarding_icon.png";
-import logo from "@/assets/logo.png";
-import Image from "next/image";
+import { Box, Drawer } from "@mui/material";
 import { useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import SidebarContent from "./SidebarContent";
 
-const Sidebar = () => {
+const SidebarContainer = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -50,4 +45,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default SidebarContainer;

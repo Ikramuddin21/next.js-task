@@ -7,8 +7,25 @@ import Image from "next/image";
 import DashboardBarChart from "@/components/dashboard/DashboardBarChart";
 import DashboardLineChart from "@/components/dashboard/DashboardLineChart";
 import DashboardTableContainer from "@/components/dashboard/DashboardTableContainer";
+import axiosApi from "@/lib/axiosInstance";
+import { useEffect, useState } from "react";
 
 const DashboardContainer = () => {
+  // const [dashboardData, setDashboardData] = useState([]);
+
+  const fetchDashboardData = async () => {
+    const { data } = await axiosApi.get("/dashboard/summary?filter=this-week");
+    // setDashboardData()
+
+    console.log(data, "dashboard data");
+  };
+
+  console.log(localStorage.getItem("token"), "localStorage");
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>

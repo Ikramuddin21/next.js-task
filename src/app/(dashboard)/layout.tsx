@@ -1,9 +1,8 @@
 "use client";
-import Sidebar from "@/components/Sidebar";
+import SidebarContainer from "@/components/SidebarContainer";
 import TopBar from "@/components/TopBar";
-import { Box, Button, Drawer } from "@mui/material";
-import { ReactNode, useState } from "react";
-import { IoMdMenu } from "react-icons/io";
+import { Box } from "@mui/material";
+import { ReactNode } from "react";
 
 type PropsChildren = {
   children?: ReactNode;
@@ -20,7 +19,7 @@ const DashboardLayout = ({ children }: PropsChildren) => {
           borderRight: "1px solid #919EAB1F",
         }}
       >
-        <Sidebar />
+        <SidebarContainer />
       </Box>
 
       {/* right */}

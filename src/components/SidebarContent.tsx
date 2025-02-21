@@ -1,11 +1,9 @@
-import { Box, Button, Drawer, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import Link from "next/link";
 import dashboardIcon from "@/assets/dashboard_icon.png";
 import onboardingIcon from "@/assets/onboarding_icon.png";
 import logo from "@/assets/logo.png";
 import Image from "next/image";
-import { useState } from "react";
-import { IoMdMenu } from "react-icons/io";
 
 const SidebarContent = () => {
   // sidebar nav items
@@ -24,7 +22,9 @@ const SidebarContent = () => {
 
   return (
     <Box sx={{ p: "24px 28px" }}>
-      <Image src={logo} alt="Logo" width={48} height={48} />
+      <Link href="/">
+        <Image src={logo} alt="Logo" width={48} height={48} />
+      </Link>
 
       <Box sx={{ mt: "24px" }}>
         <Typography
