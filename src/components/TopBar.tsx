@@ -1,3 +1,4 @@
+"use client";
 import { Box, Popover, Typography } from "@mui/material";
 import Image from "next/image";
 import avatar from "@/assets/avatar_top.png";

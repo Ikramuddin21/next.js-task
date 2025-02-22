@@ -1,8 +1,12 @@
 "use client";
 import axiosApi from "@/lib/axiosInstance";
 import { Box, CircularProgress, Typography } from "@mui/material";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import ReactApexChart from "react-apexcharts";
+// import ReactApexChart from "react-apexcharts";
+const ReactApexChart = dynamic(() => import("react-apexcharts"), {
+  ssr: false,
+});
 
 const DashboardLineChart = () => {
   const [isLoading, setIsLoading] = useState(true);

@@ -1,3 +1,4 @@
+"use client";
 import axios, { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 const baseURL = process.env.NEXT_PUBLIC_API_URL;
@@ -11,7 +12,8 @@ const axiosApi = axios.create({
 
 // Request Interceptor
 axiosApi.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  const accessToken = localStorage.getItem("token");
+  const accessToken =
+    typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`;
