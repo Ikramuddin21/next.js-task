@@ -18,7 +18,7 @@ import axiosApi from "@/lib/axiosInstance";
 import { debounce } from "lodash";
 
 const DashboardTableContainer = () => {
-  const [status, setStatus] = useState("all");
+  const [status, setStatus] = useState("");
   const [search, setSearch] = useState("");
   const [type, setType] = useState("");
 
@@ -26,7 +26,6 @@ const DashboardTableContainer = () => {
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
-  console.log(status, "status");
 
   const debouncedSearch: any = useCallback(
     debounce((e: ChangeEvent<HTMLInputElement>) => handleSearch(e), 700),
@@ -55,7 +54,7 @@ const DashboardTableContainer = () => {
               },
             }}
           >
-            <Tab label="All" value="all" />
+            <Tab label="All" value="" />
             <Tab label="Accepted" value="accepted" />
           </Tabs>
         </Box>

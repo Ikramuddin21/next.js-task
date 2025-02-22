@@ -1,6 +1,6 @@
-"use client";
++"use client";
 import axiosApi from "@/lib/axiosInstance";
-import { Box, Button } from "@mui/material";
+import { Box, Button, CircularProgress } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -12,74 +12,45 @@ import { useEffect, useState } from "react";
 import { FaPen } from "react-icons/fa6";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 
+interface Data {
+  user_name: string;
+  email?: string;
+  phone: string;
+  company: string;
+  jobTitle: string;
+  type: string;
+  status: string;
+  action?: null;
+}
+
+interface Column {
+  id:
+    | "user_name"
+    | "phone"
+    | "company"
+    | "jobTitle"
+    | "type"
+    | "status"
+    | "action";
+  label: string;
+  minWidth?: number;
+  align?: "left";
+}
+
+interface StatusStyleType {
+  backgroundColor: string;
+  color: string;
+}
+
 const DashboardTable = ({ status, search, type }: any) => {
-  interface Data {
-    name: string;
-    email?: string;
-    phone_number: string;
-    company: string;
-    job_title: string;
-    type: string;
-    status: string;
-    action?: null;
-  }
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  interface Column {
-    id:
-      | "name"
-      | "phone_number"
-      | "company"
-      | "job_title"
-      | "type"
-      | "status"
-      | "action";
-    label: string;
-    minWidth?: number;
-    align?: "left";
-  }
+  const [tableData, setTableData] = useState([]);
+  const [tableFilteredData, setTableFilteredData] = useState([...tableData]);
+  const [isLoading, setIsLoading] = useState(true);
+  console.log("tableFilteredData", tableFilteredData);
 
-  const columns: readonly Column[] = [
-    {
-      id: "name",
-      label: "Name",
-      minWidth: 170,
-    },
-    { id: "phone_number", label: "Phone number", minWidth: 100 },
-    {
-      id: "company",
-      label: "Company",
-      minWidth: 170,
-      align: "left",
-    },
-    {
-      id: "job_title",
-      label: "Job Title",
-      minWidth: 170,
-      align: "left",
-    },
-    {
-      id: "type",
-      label: "Type",
-      minWidth: 170,
-      align: "left",
-    },
-    {
-      id: "status",
-      label: "Status",
-      minWidth: 170,
-      align: "left",
-    },
-    {
-      id: "action",
-      label: "",
-      minWidth: 170,
-      align: "left",
-    },
-  ];
-  interface StatusStyleType {
-    backgroundColor: string;
-    color: string;
-  }
   // render status style
   const renderStatusStyle = (status: string | any): StatusStyleType => {
     if (status === "accepted") {
@@ -91,52 +62,104 @@ const DashboardTable = ({ status, search, type }: any) => {
     }
   };
 
-  const rows: Data[] = [
+  // table columns
+  const columns: readonly Column[] = [
     {
-      name: "John Khan",
-      email: "john12@gmail.com",
-      phone_number: "0152102120",
-      company: "Software Ltd",
-      job_title: "Frontend Developer",
-      type: "Monthly",
-      status: "accepted",
+      id: "user_name",
+      label: "Name",
+      // minWidth: 170,
+    },
+    { id: "phone", label: "Phone number" },
+    {
+      id: "company",
+      label: "Company",
+      // minWidth: 170,
+      align: "left",
     },
     {
-      name: "Mr. Lorem",
-      email: "lorem12@gmail.com",
-      phone_number: "0152102120",
-      company: "Software Ltd",
-      job_title: "Frontend Developer",
-      type: "Monthly",
-      status: "rejected",
+      id: "jobTitle",
+      label: "Job Title",
+      // minWidth: 170,
+      align: "left",
     },
     {
-      name: "Jestin",
-      email: "jestin12@gmail.com",
-      phone_number: "0152102120",
-      company: "Software Ltd",
-      job_title: "Frontend Developer",
-      type: "Monthly",
-      status: "pending",
+      id: "type",
+      label: "Type",
+      // minWidth: 170,
+      align: "left",
+    },
+    {
+      id: "status",
+      label: "Status",
+      // minWidth: 170,
+      align: "left",
+    },
+    {
+      id: "action",
+      label: "",
+      // minWidth: 170,
+      align: "left",
     },
   ];
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  // table rows
+  // const rows: Data[] = [...tableData];
 
-  const [tableData, setTableData] = useState([]);
-
+  // fetch table data
   const fetchTableData = async () => {
-    const { data } = await axiosApi.get(
-      `/offers?type=${type}&status=${status}&search=${search}&page=${page}&per_page=${rowsPerPage}`
-    );
-    setTableData(data);
+    try {
+      setIsLoading(true);
+      const { data } = await axiosApi.get(
+        `/offers?page=${page}&per_page=${rowsPerPage}`
+      );
+      setTableData(data?.data);
+      setTableFilteredData(data?.data);
+      console.log("data api", data);
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
   console.log(tableData, "table data");
 
   useEffect(() => {
     fetchTableData();
   }, []);
+
+  // useEffect(() => {
+  //   if (tableData?.length) setTableFilteredData(tableData);
+  // }, [tableData.length]);
+  console.log("status", status);
+  console.log("type", type);
+  console.log("search", search);
+
+  // filter / search
+  useEffect(() => {
+    if (!!type) {
+      const filterData = tableData?.filter((item: Data) => item?.type === type);
+      setTableFilteredData(filterData);
+      console.log(type, "type inside");
+    } else {
+      setTableFilteredData(tableData);
+    }
+    if (!!search) {
+      const filterData = tableData?.filter((item: Data) =>
+        item?.user_name.toLowerCase().includes(search.toLowerCase())
+      );
+      setTableFilteredData(filterData);
+    } else {
+      setTableFilteredData(tableData);
+    }
+    if (!!status) {
+      const filterData = tableData?.filter(
+        (item: Data) => item?.status === status
+      );
+      setTableFilteredData(filterData);
+    } else {
+      setTableFilteredData(tableData);
+    }
+  }, [search, type, status]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -148,6 +171,22 @@ const DashboardTable = ({ status, search, type }: any) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  if (isLoading)
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+          height: "374px",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+
   return (
     <Box sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -166,22 +205,26 @@ const DashboardTable = ({ status, search, type }: any) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
+            {tableFilteredData
+              ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row: Data, index) => {
                 return (
                   <TableRow
                     hover
                     role="checkbox"
                     tabIndex={-1}
-                    key={`${row.phone_number}_${index}`}
+                    key={`${row.phone}_${index}`}
                   >
                     {columns.map((column) => {
                       const value = row[column.id];
 
                       return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.id === "name" ? (
+                        <TableCell
+                          key={column.id}
+                          align={column.align}
+                          sx={{ textTransform: "capitalize" }}
+                        >
+                          {column.id === "user_name" ? (
                             <div>
                               <p
                                 style={{
@@ -244,7 +287,7 @@ const DashboardTable = ({ status, search, type }: any) => {
         }}
         rowsPerPageOptions={[5, 10, 20]}
         component="div"
-        count={rows.length}
+        count={tableFilteredData?.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

@@ -2,13 +2,29 @@
 import SidebarContainer from "@/components/SidebarContainer";
 import TopBar from "@/components/TopBar";
 import { Box } from "@mui/material";
-import { ReactNode } from "react";
+import { redirect, useRouter } from "next/navigation";
+import { ReactNode, useEffect, useState } from "react";
 
 type PropsChildrenType = {
   children?: ReactNode;
 };
 
 const DashboardLayout = ({ children }: PropsChildrenType) => {
+  const router = useRouter();
+  const [isAuthChecked, setIsAuthChecked] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      router.replace("/login");
+    } else {
+      setIsAuthChecked(true);
+    }
+  }, [isAuthChecked]);
+
+  if (!isAuthChecked) return null;
+
   return (
     <Box sx={{ minHeight: "100vh", display: "flex" }}>
       {/* left sidebar */}
