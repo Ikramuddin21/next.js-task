@@ -3,6 +3,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import CssBaseline from "@mui/material/CssBaseline";
 import InitColorSchemeScript from "@mui/material/InitColorSchemeScript";
 import ThemeProvider from "@/theme/index";
+import UserContextProvider from "@/context/UserContextProvider";
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
@@ -13,7 +14,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           <ThemeProvider>
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
-            {props.children}
+            <UserContextProvider>{props.children}</UserContextProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

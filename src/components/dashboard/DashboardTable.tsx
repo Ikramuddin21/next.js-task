@@ -1,4 +1,5 @@
 "use client";
+import axiosApi from "@/lib/axiosInstance";
 import { Box, Button } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,11 +8,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaPen } from "react-icons/fa6";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 
-const DashboardTable = () => {
+const DashboardTable = ({ status, search, type }: any) => {
   interface Data {
     name: string;
     email?: string;
@@ -122,6 +123,20 @@ const DashboardTable = () => {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const [tableData, setTableData] = useState([]);
+
+  const fetchTableData = async () => {
+    const { data } = await axiosApi.get(
+      `/offers?type=${type}&status=${status}&search=${search}&page=${page}&per_page=${rowsPerPage}`
+    );
+    setTableData(data);
+  };
+  console.log(tableData, "table data");
+
+  useEffect(() => {
+    fetchTableData();
+  }, []);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);

@@ -1,54 +1,98 @@
 "use client";
-import { Box, Typography } from "@mui/material";
-import { useState } from "react";
+import axiosApi from "@/lib/axiosInstance";
+import { Box, CircularProgress, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 const DashboardLineChart = () => {
-  const [state, setState] = useState<any>({
-    series: [
-      {
-        name: "Offer",
-        data: [25, 55, 63, 60, 66, 88, 114],
-        color: "#1C252E",
-      },
-    ],
-    options: {
-      chart: {
-        type: "line",
-        height: 350,
-        toolbar: { show: false },
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: "45%",
-          endingShape: "rounded",
-          borderRadius: 3,
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        show: true,
-        width: 3,
-        colors: ["transparent"],
-      },
-      xaxis: {
-        categories: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-      },
-      fill: {
-        opacity: 1,
-      },
-      tooltip: {
-        y: {
-          formatter: function (val: number) {
-            return val;
+  const [isLoading, setIsLoading] = useState(true);
+  const [state, setState] = useState<any>({});
+
+  // fetch chart data & set chart data
+  const fetchChartData = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await axiosApi.get("/dashboard/stat?filter=this-week");
+      if (data?.offers_sent) {
+        const days = Object.keys(data?.offers_sent).map(
+          (item) => item.slice(0, 1).toUpperCase() + item.slice(1, 3)
+        );
+
+        const offers = Object.values(data?.offers_sent);
+
+        // set chart state
+        setState({
+          series: [
+            {
+              name: "Offer",
+              data: offers,
+              color: "#1C252E",
+            },
+          ],
+          options: {
+            chart: {
+              type: "line",
+              height: 350,
+              toolbar: { show: false },
+            },
+            plotOptions: {
+              bar: {
+                horizontal: false,
+                columnWidth: "45%",
+                endingShape: "rounded",
+                borderRadius: 3,
+              },
+            },
+            dataLabels: {
+              enabled: false,
+            },
+            stroke: {
+              show: true,
+              width: 3,
+              colors: ["transparent"],
+            },
+            xaxis: {
+              categories: days,
+            },
+            fill: {
+              opacity: 1,
+            },
+            tooltip: {
+              y: {
+                formatter: function (val: number) {
+                  return val;
+                },
+              },
+            },
           },
-        },
-      },
-    },
-  });
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching dashboard data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchChartData();
+  }, []);
+
+  if (isLoading)
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+          height: "374px",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+
   return (
     <Box sx={{ width: "auto" }}>
       <Typography

@@ -4,11 +4,11 @@ import TopBar from "@/components/TopBar";
 import { Box } from "@mui/material";
 import { ReactNode } from "react";
 
-type PropsChildren = {
+type PropsChildrenType = {
   children?: ReactNode;
 };
 
-const DashboardLayout = ({ children }: PropsChildren) => {
+const DashboardLayout = ({ children }: PropsChildrenType) => {
   return (
     <Box sx={{ minHeight: "100vh", display: "flex" }}>
       {/* left sidebar */}

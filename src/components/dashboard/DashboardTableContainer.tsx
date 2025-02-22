@@ -10,16 +10,32 @@ import {
   Tabs,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import DashboardTable from "./DashboardTable";
 import { IoIosArrowDown } from "react-icons/io";
+import axiosApi from "@/lib/axiosInstance";
+import { debounce } from "lodash";
 
 const DashboardTableContainer = () => {
-  const [value, setValue] = useState("1");
+  const [status, setStatus] = useState("all");
+  const [search, setSearch] = useState("");
+  const [type, setType] = useState("");
 
+  // handle search
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+  console.log(status, "status");
+
+  const debouncedSearch: any = useCallback(
+    debounce((e: ChangeEvent<HTMLInputElement>) => handleSearch(e), 700),
+    []
+  );
+
+  // tabs
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-    setValue(newValue);
+    setStatus(newValue);
   };
   return (
     <>
@@ -27,7 +43,7 @@ const DashboardTableContainer = () => {
       <Box>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
-            value={value}
+            value={status}
             onChange={handleChange}
             indicatorColor="secondary"
             aria-label="basic tabs example"
@@ -39,8 +55,8 @@ const DashboardTableContainer = () => {
               },
             }}
           >
-            <Tab label="All" value="1" />
-            <Tab label="Accepted" value="2" />
+            <Tab label="All" value="all" />
+            <Tab label="Accepted" value="accepted" />
           </Tabs>
         </Box>
       </Box>
@@ -56,6 +72,7 @@ const DashboardTableContainer = () => {
         }}
       >
         <TextField
+          onChange={debouncedSearch}
           placeholder="Search..."
           slotProps={{
             input: {
@@ -87,11 +104,11 @@ const DashboardTableContainer = () => {
           <Select
             id="demo-simple-select"
             label="Type"
-            defaultValue="all"
+            defaultValue=""
+            onChange={(e) => setType(e.target.value)}
             IconComponent={(props) => (
               <IoIosArrowDown {...props} color="#1C252E" />
             )}
-            //   onChange={handleChange}
             sx={{
               "& .MuiInputBase-input": {
                 fontSize: "15px",
@@ -102,15 +119,15 @@ const DashboardTableContainer = () => {
               },
             }}
           >
-            <MenuItem value="all">All</MenuItem>
-            <MenuItem value="accepted">Accepted</MenuItem>
-            <MenuItem value="rejected">Rejected</MenuItem>
+            <MenuItem value="">Choose One</MenuItem>
+            <MenuItem value="monthly">Monthly</MenuItem>
+            <MenuItem value="yearly">Yearly</MenuItem>
           </Select>
         </FormControl>
       </Box>
 
       {/* dashboard table */}
-      <DashboardTable />
+      <DashboardTable type={type} search={search} status={status} />
     </>
   );
 };

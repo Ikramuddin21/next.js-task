@@ -15,6 +15,11 @@ import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import { SubmitHandler, useForm } from "react-hook-form";
 import axiosApi from "@/lib/axiosInstance";
+import { LoginUserDataType, UserContextType, UserType } from "@/type/types";
+import { useRouter } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
+import useUser from "@/hooks/useUser";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -64,24 +69,41 @@ interface IFormInput {
 }
 
 export default function SignIn() {
+  const { setUser }: any = useUser();
   const { register, handleSubmit } = useForm<IFormInput>();
+  const router = useRouter();
 
+  // on submit
   const onSubmit: SubmitHandler<IFormInput> = async (value) => {
     const { email, password } = value;
 
     // login post
-    const { data }: any = await axiosApi.post("/login", {
-      email,
-      password,
-    });
+    try {
+      const { data }: { data: LoginUserDataType } =
+        await axiosApi.post<LoginUserDataType>("/login", {
+          email,
+          password,
+        });
 
-    const { token = "" } = data;
+      console.log("data", data);
+      toast.success("Login Successfull!");
+      const { token = "" } = data;
 
-    if (token) localStorage.setItem("token", token);
+      if (token) {
+        localStorage.setItem("token", token);
+        setUser(data?.user);
+        router.push("/");
+      }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error))
+        toast.error(error.response?.data?.error || "Login failed!");
+      else toast.error("Something went wrong!");
+    }
   };
 
   return (
     <>
+      <ToastContainer />
       <CssBaseline enableColorScheme />
       <SignInContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">

@@ -3,27 +3,33 @@ import { Box, MenuItem, Select, Typography } from "@mui/material";
 import { IoIosArrowDown } from "react-icons/io";
 import icon1 from "@/assets/overview_icon.png";
 import icon2 from "@/assets/overview_icon2.png";
-import Image from "next/image";
 import DashboardBarChart from "@/components/dashboard/DashboardBarChart";
 import DashboardLineChart from "@/components/dashboard/DashboardLineChart";
 import DashboardTableContainer from "@/components/dashboard/DashboardTableContainer";
 import axiosApi from "@/lib/axiosInstance";
 import { useEffect, useState } from "react";
+import useUser from "@/hooks/useUser";
+import { StatsDataType, UserType } from "@/type/types";
+import OverviewCard from "./OverviewCard";
 
 const DashboardContainer = () => {
-  // const [dashboardData, setDashboardData] = useState([]);
+  const [dashboardData, setDashboardData] = useState<StatsDataType | undefined>(
+    undefined
+  );
+  const { user }: UserType | any = useUser();
+  console.log("user", user);
 
-  const fetchDashboardData = async () => {
-    const { data } = await axiosApi.get("/dashboard/summary?filter=this-week");
-    // setDashboardData()
+  const fetchSummaryData = async () => {
+    const { data }: StatsDataType | any = await axiosApi.get<StatsDataType>(
+      "/dashboard/summary?filter=this-week"
+    );
+    setDashboardData(data);
 
-    console.log(data, "dashboard data");
+    // console.log(data, "dashboard data");
   };
 
-  console.log(localStorage.getItem("token"), "localStorage");
-
   useEffect(() => {
-    fetchDashboardData();
+    fetchSummaryData();
   }, []);
 
   return (
@@ -72,62 +78,32 @@ const DashboardContainer = () => {
         }}
       >
         {/* item 1 */}
-        <Box
-          sx={{
-            p: "24px",
-            borderRadius: "16px",
-            minWidth: { xs: "295px", sm: "343px" },
-            boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+        <OverviewCard
+          data={{
+            curr: dashboardData?.current?.active_users,
+            pre: dashboardData?.previous?.active_users,
+            title: "Total active users",
           }}
-        >
-          <Typography sx={{ fontWeight: "600" }}>Total active users</Typography>
-          <Typography variant="h1" sx={{ fontWeight: "700", my: "8px" }}>
-            8.2k
-          </Typography>
-          <Box sx={{ display: "flex", alignItems: "center", gap: "4px" }}>
-            <Image src={icon1} alt="" width={24} height={24} />
-            <span style={{ fontWeight: "600" }}>8.2%</span>
-            <span style={{ color: "#637381" }}>previous month</span>
-          </Box>
-        </Box>
+          icon={icon1}
+        />
         {/* item 2 */}
-        <Box
-          sx={{
-            p: "24px",
-            borderRadius: "16px",
-            minWidth: { xs: "295px", sm: "343px" },
-            boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+        <OverviewCard
+          data={{
+            curr: dashboardData?.current?.clicks,
+            pre: dashboardData?.previous?.clicks,
+            title: "Total clicks",
           }}
-        >
-          <Typography sx={{ fontWeight: "600" }}>Total clicks</Typography>
-          <Typography variant="h1" sx={{ fontWeight: "700", my: "8px" }}>
-            8.2k
-          </Typography>
-          <Box sx={{ display: "flex", alignItems: "center", gap: "4px" }}>
-            <Image src={icon1} alt="" width={24} height={24} />
-            <span style={{ fontWeight: "600" }}>8.2%</span>
-            <span style={{ color: "#637381" }}>previous month</span>
-          </Box>
-        </Box>
+          icon={icon1}
+        />
         {/* item 3 */}
-        <Box
-          sx={{
-            p: "24px",
-            borderRadius: "16px",
-            minWidth: { xs: "295px", sm: "343px" },
-            boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+        <OverviewCard
+          data={{
+            curr: dashboardData?.current?.appearance,
+            pre: dashboardData?.previous?.appearance,
+            title: "Total appearances",
           }}
-        >
-          <Typography sx={{ fontWeight: "600" }}>Total appearances</Typography>
-          <Typography variant="h1" sx={{ fontWeight: "700", my: "8px" }}>
-            8.2k
-          </Typography>
-          <Box sx={{ display: "flex", alignItems: "center", gap: "4px" }}>
-            <Image src={icon2} alt="" width={24} height={24} />
-            <span style={{ fontWeight: "600" }}>8.2%</span>
-            <span style={{ color: "#637381" }}>previous month</span>
-          </Box>
-        </Box>
+          icon={icon2}
+        />
       </Box>
 
       {/* chart section */}

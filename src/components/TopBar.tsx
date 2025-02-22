@@ -2,9 +2,14 @@ import { Box, Popover, Typography } from "@mui/material";
 import Image from "next/image";
 import avatar from "@/assets/avatar_top.png";
 import { MouseEvent, useState } from "react";
+import { redirect } from "next/navigation";
+import useUser from "@/hooks/useUser";
+import { UserType } from "@/type/types";
 
 const TopBar = () => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
+  const { user }: UserType | any = useUser();
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -12,6 +17,11 @@ const TopBar = () => {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleSignOut = () => {
+    localStorage.removeItem("token");
+    redirect("/login");
   };
 
   return (
@@ -50,9 +60,11 @@ const TopBar = () => {
         }}
       >
         <Typography sx={{ p: 1, cursor: "pointer" }} onClick={handleClose}>
-          Profile
+          {user?.name}
         </Typography>
-        <Typography sx={{ p: 1, cursor: "pointer" }}>Signout</Typography>
+        <Typography sx={{ p: 1, cursor: "pointer" }} onClick={handleSignOut}>
+          Signout
+        </Typography>
       </Popover>
     </>
   );
