@@ -1,6 +1,6 @@
 ## **Overview**
 
- This is a admin portal project.
+ This is a admin portal project, build with some features:- *User login, User Authentication, Real-Time Dashboard, Onboarding User*
 
 Live link:
 
