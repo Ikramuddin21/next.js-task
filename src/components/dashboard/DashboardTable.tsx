@@ -49,7 +49,7 @@ const DashboardTable = ({ status, search, type }: any) => {
   const [tableData, setTableData] = useState([]);
   const [tableFilteredData, setTableFilteredData] = useState([...tableData]);
   const [isLoading, setIsLoading] = useState(true);
-  console.log("tableFilteredData", tableFilteredData);
+  // console.log("tableFilteredData", tableFilteredData);
 
   // render status style
   const renderStatusStyle = (status: string | any): StatusStyleType => {
@@ -102,9 +102,6 @@ const DashboardTable = ({ status, search, type }: any) => {
     },
   ];
 
-  // table rows
-  // const rows: Data[] = [...tableData];
-
   // fetch table data
   const fetchTableData = async () => {
     try {
@@ -114,32 +111,22 @@ const DashboardTable = ({ status, search, type }: any) => {
       );
       setTableData(data?.data);
       setTableFilteredData(data?.data);
-      console.log("data api", data);
     } catch (error) {
       console.error("Error fetching dashboard data:", error);
     } finally {
       setIsLoading(false);
     }
   };
-  console.log(tableData, "table data");
 
   useEffect(() => {
     fetchTableData();
   }, []);
-
-  // useEffect(() => {
-  //   if (tableData?.length) setTableFilteredData(tableData);
-  // }, [tableData.length]);
-  console.log("status", status);
-  console.log("type", type);
-  console.log("search", search);
 
   // filter / search
   useEffect(() => {
     if (!!type) {
       const filterData = tableData?.filter((item: Data) => item?.type === type);
       setTableFilteredData(filterData);
-      console.log(type, "type inside");
     } else {
       setTableFilteredData(tableData);
     }

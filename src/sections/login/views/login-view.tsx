@@ -85,7 +85,6 @@ export default function SignIn() {
           password,
         });
 
-      console.log("data", data);
       toast.success("Login Successfull!");
       const { token = "" } = data;
 

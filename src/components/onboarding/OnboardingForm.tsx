@@ -46,7 +46,6 @@ const OnboardingForm = () => {
     const { data } = await axiosApi.get("/users");
     setUsers(data?.data);
   };
-  console.log(users, "users data data");
 
   useEffect(() => {
     fetchUsersData();
@@ -69,8 +68,6 @@ const OnboardingForm = () => {
         ...fValue,
       });
 
-      console.log("data", data);
-
       if (data?.data?.user_id) {
         toast.success(data?.message || "Offer Successfuly Send!");
         // router.push("/");
@@ -81,7 +78,6 @@ const OnboardingForm = () => {
         toast.error(error.response?.data?.error || "Submit failed!");
       else toast.error("Something went wrong!");
     }
-    console.log("Form Data:", fValue);
   };
 
   return (

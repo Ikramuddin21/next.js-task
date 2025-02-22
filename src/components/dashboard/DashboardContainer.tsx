@@ -16,8 +16,6 @@ const DashboardContainer = () => {
   const [dashboardData, setDashboardData] = useState<StatsDataType | undefined>(
     undefined
   );
-  const { user }: UserType | any = useUser();
-  console.log("user", user);
 
   const fetchSummaryData = async () => {
     const { data }: StatsDataType | any = await axiosApi.get<StatsDataType>(
