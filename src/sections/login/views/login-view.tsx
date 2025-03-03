@@ -131,6 +131,7 @@ export default function SignIn() {
                 // name="email"
                 {...register("email")}
                 placeholder="your@email.com"
+                defaultValue="test@example.com"
                 autoComplete="email"
                 autoFocus
                 required
@@ -146,6 +147,7 @@ export default function SignIn() {
                 // name="password"
                 {...register("password")}
                 placeholder="••••••"
+                defaultValue="password123"
                 type="password"
                 id="password"
                 autoComplete="current-password"

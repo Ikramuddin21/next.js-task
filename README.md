@@ -1,6 +1,6 @@
 ## **Overview**
 
- This is a admin portal project, build with some features:- *User login, User Authentication, Real-Time Dashboard, Onboarding User*
+This is a admin portal project, build with some features:- _User login, User Authentication, Real-Time Dashboard, Onboarding User_
 
 Live link:
 
@@ -20,7 +20,7 @@ Live link:
 Clone the repository:
 
 ```bash
-git clone https://github.com/Ikramuddin21/next.js-task
+git clone https://github.com/Ikramuddin21/next.js-task.git
 cd next.js-task
 npm install
 npm run dev
